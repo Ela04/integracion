@@ -1,11 +1,9 @@
 from django.db import models
 
-# Create your models here.
+class Productos(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
 
-class Tb_Articulo(models.Model):
-    codigo = models.CharField(primary_key=True, max_length=6)
-    nombre = models.CharField(max_length=50)
-    stock = models.PositiveSmallIntegerField()
     def __str__(self):
-        texto = "{0} ({1})"
-        return texto.format(self.nombre, self.stock)
+        return self.nombre

@@ -1,0 +1,13 @@
+{% extends "../index.html" %}
+{% block title %} Catalógo de Productos {% endblock %}
+
+{% block body %}
+
+<h1>Lista de Productos</h1>
+<ul>
+  {% for p in productos %}
+  <li>{{ p.nombre }} - ${{ p.precio }} <a href="{% url 'carrito' p.id %}">Agregar al carrito</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

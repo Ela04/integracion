@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tb_Articulo
+from .models import Productos
 
 # Register your models here.
-admin.site.register(Tb_Articulo)
+admin.site.register(Productos)
