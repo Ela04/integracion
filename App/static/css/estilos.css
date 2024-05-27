@@ -1,0 +1,9 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+/*SLIDER DE IMAGENES====*/
+.carousel-inner {
+  max-height:39rem !important;
+}
