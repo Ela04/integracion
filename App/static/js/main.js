@@ -11,3 +11,15 @@
     });
 })();
 
+
+
+(document).ready(function(){
+    (".subscription-button").click(function(e){
+        e.preventDefault();
+        var price = $(this).data('price');
+        var subscriptionType = $(this).data('subscription-type');
+        $("#amount-input").val(price);
+        $("#subscription-type-input").val(subscriptionType);
+        $("#subscription-form").submit();
+    });
+});
