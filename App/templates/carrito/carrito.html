@@ -1,0 +1,66 @@
+{% extends "../index.html" %}
+{% block title %} Gestión de Artículos {% endblock %}
+
+{% block body %}
+<div> 
+  <h1>Carrito de Compras</h1>
+  <div class="table-responsive py-2">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Stock</th>
+          <th colspan="2">Opciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in articulos %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{c.codigo}}</td>
+          <td>{{c.nombre}}</td>
+          <td>{{c.stock}}</td>
+          <td><a href="edicionArticulo/{{c.codigo}}" class="btn btn-info">Editar</a></td>
+          <td><a href="eliminarArticulo/{{c.codigo}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong class="text-dark">{{ message }}</strong>
+      </div>
+      {% endfor %}
+      {% endif %}
+      <h2>WEBPAY</h2>
+      <div class="card">
+        <div class="card-body">
+          <form action="#" method="POST">{% csrf_token %}
+            <div class="form-group">
+              <input type="text" id="rut" name="rut" class="form-control" placeholder="rut" minlength="6"
+                maxlength="6" required>
+            </div>
+            <div class="form-group">
+              <input type="text" id="numero" name="numero" class="form-control" placeholder="123456789" maxlength="50"
+                required>
+            </div>
+            <div class="form-group">
+              <input type="text" id="password" name="password" class="form-control" min="1" placeholder="contraseña" required>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-success btn-block text-white">Aceptar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
