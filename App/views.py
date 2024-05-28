@@ -21,7 +21,7 @@ def productos(request):
 
 def carrito(request, producto_id):
     producto = Productos.objects.get(pk=producto_id)
-    carrito = request.session.get('carrito', {})
+    carrito = request.session.get('carrito', {producto})
     carrito[producto_id] = {
         'id': producto_id,
         'nombre': producto.nombre,
