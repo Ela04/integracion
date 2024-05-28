@@ -7,14 +7,14 @@
 
 <div class="container">
   <div class="row">
-    {% for producto in productos %}
+    {% for producto in productoss %}
     <div class="col-md-4">
       <div class="card mb-4">
         <div class="card-body">
           <h5 class="card-title">{{ producto.nombre }}</h5>
           <p class="card-text">{{ producto.descripcion }}</p>
           <p class="card-text">{{ producto.precio }}</p>
-          <a href="{% url 'agregar_al_carrito' producto.id %}" class="btn btn-primary">Agregar al Carrito</a>
+          <a href="{% url 'carrito' producto.producto.id %}" class="btn btn-primary">Agregar al Carrito</a>
         </div>
       </div>
     </div>
@@ -26,14 +26,14 @@
 <h1>Carrito de Compras</h1>
 <div class="container">
   <div class="row">
-    {% for item in carrito.values %}
+    {% for item in request.session.carrito.values %}
     <div class="col-md-12">
       <div class="card mb-4">
         <div class="card-body">
           <h5 class="card-title">{{ item.nombre }}</h5>
           <p class="card-text">Precio: {{ item.precio }}</p>
           <p class="card-text">Cantidad: {{ item.cantidad }}</p>
-          <p class="card-text">Subtotal: {{ item.precio|multiply:item.cantidad }}</p>
+          <p class="card-text">Subtotal: {{ item.precio|floatformat:2 }}</p>
         </div>
       </div>
     </div>
@@ -48,4 +48,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}

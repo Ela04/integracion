@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect  # Importa la función render para renderizar plantillas HTML.
+from django.shortcuts import render, redirect, get_object_or_404  # Importa la función render para renderizar plantillas HTML.
 from django.urls import reverse  # Importa reverse para construir URLs dinámicamente.
 from .models import Productos
 from django.views.decorators.http import require_http_methods  # Importa para restringir los métodos HTTP permitidos.
@@ -14,19 +14,27 @@ def index(request):
     return render(request, 'index.html')
 
 
+
 def productos(request):
     productos = Productos.objects.all()
     return render(request, 'carrito/productos.html', {'productos': productos})
 
 
+
 def carrito(request, producto_id):
     producto = Productos.objects.get(pk=producto_id)
-    carrito = request.session.get('carrito', {producto})
-    carrito[producto_id] = {
-        'id': producto_id,
-        'nombre': producto.nombre,
-        'precio': float(producto.precio),
-    }
+    carrito = request.session.get('carrito', {})
+    if producto_id in carrito:
+        # Si el producto ya está en el carrito, aumenta la cantidad
+        carrito[producto_id]['cantidad'] += 1
+    else:
+        # Si el producto no está en el carrito, agrégalo al carrito
+        carrito[producto_id] = {
+            'id': producto_id,
+            'nombre': producto.nombre,
+            'precio': float(producto.precio),
+            'cantidad': 1,
+        }
     request.session['carrito'] = carrito
     return redirect('productos')
 
