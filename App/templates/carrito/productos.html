@@ -4,17 +4,17 @@
 {% block body %}
 
 <h1>Lista de Productos</h1>
-
+<td>{{producto.nombre}}</td>
 <div class="container">
   <div class="row">
-    {% for producto in productoss %}
+    {% for producto in productos %}
     <div class="col-md-4">
       <div class="card mb-4">
         <div class="card-body">
           <h5 class="card-title">{{ producto.nombre }}</h5>
           <p class="card-text">{{ producto.descripcion }}</p>
           <p class="card-text">{{ producto.precio }}</p>
-          <a href="{% url 'carrito' producto.producto.id %}" class="btn btn-primary">Agregar al Carrito</a>
+          <a href="{% url 'carrito' producto.producto_id %}" class="btn btn-primary">Agregar al Carrito</a>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
   </div>
 </div>
 
-
+{% if request.session.carrito %}
 <h1>Carrito de Compras</h1>
 <div class="container">
   <div class="row">
@@ -33,20 +33,22 @@
           <h5 class="card-title">{{ item.nombre }}</h5>
           <p class="card-text">Precio: {{ item.precio }}</p>
           <p class="card-text">Cantidad: {{ item.cantidad }}</p>
-          <p class="card-text">Subtotal: {{ item.precio|floatformat:2 }}</p>
+          <p class="card-text">Subtotal: {{item.subtotal}}</p>
         </div>
       </div>
     </div>
     {% endfor %}
     <div class="col-md-12">
-      <h3>Total: {{ total }}</h3>
+      <h3>Total: {{ request.session.total }}</h3>
       <form action="{% url 'webpay_create' %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="amount" value="{{ total }}">
+        <input type="hidden" name="amount" value="{{ request.session.total }}">
         <button type="submit" class="btn btn-success">Pagar</button>
+        <a href="{% url 'limpiar_carrito' %}" class="btn btn-danger"> Limpiar Carrito</a>
       </form>
     </div>
   </div>
 </div>
 
+{% endif %}
 {% endblock %}

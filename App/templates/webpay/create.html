@@ -1,4 +1,4 @@
-{% extends '../index.html' %} {% load static %} {% block title %}FERREMAS - Confirmación de pago{% endblock %} {% blockbody %}
+{% extends '../index.html' %} {% load static %} {% block title %}FERREMAS - Confirmación de pago{% endblock %} {% block body %}
 <div class="container">
   <div class="row">
     <div class="col-md-8 offset-md-2">
@@ -18,22 +18,13 @@
             </strong>
             !
           </p>
-          {% if user.is_authenticated %}
-          <p class="card-text">{{ user.first_name }} {{ user.last_name }} la suscripción sera asociada a tu cuenta.</p>
-          {% else %}
-          <p class="card-text">Tu suscripción se activara en tu cuenta, tienes que estar registrado y tener tu sesión
-            inciada.</p>
-          {% endif %}
           <form action="{{ response.url }}" method="post">
             {% csrf_token %}
             <input type="hidden" name="token_ws" value="{{ response.token }}" />
             <div class="text-center">
-              {% if user.is_authenticated %}
+
               <button type="submit" class="btn btn-primary">¡Vamos a pagar ahora!</button>
-              {% else %}
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login">Iniciar
-                sesión</button>
-              {% endif %}
+
               <a href="#" class="btn btn-secondary">Cancelar</a>
             </div>
           </form>
